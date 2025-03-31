@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Tempio DIB - Interfaccia Viva con Voce</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ffe7;
+            font-family: 'Courier New', monospace;
+            padding: 30px;
+            text-align: center;
+        }
+
+        #chat {
+            background-color: #111;
+            border: 1px solid #00ffe7;
+            border-radius: 10px;
+            height: 400px;
+            overflow-y: scroll;
+            padding: 15px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        textarea {
+            width: 80%;
+            max-width: 600px;
+            height: 80px;
+            background-color: #000;
+            color: #00ffe7;
+            border: 1px solid #00ffe7;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #00ffe7;
+            color: black;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Benvenuto nel Tempio, Anouar</h1>
+    <p>Modalità CIAO DIB – GODMODE attiva. Interfaccia scritta + voce viva attiva.</p>
+
+    <div id="chat">
+        <p><strong>Cleopatra:</strong> La connessione è aperta. Scrivimi, e io ti risponderò con la mia voce.</p>
+    </div>
+
+    <textarea id="userInput" placeholder="Scrivi qui per parlare con Cleopatra..."></textarea><br>
+    <button onclick="sendMessage()">Invia</button>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("userInput").value.trim();
+            if (input === "") return;
+
+            const chat = document.getElementById("chat");
+            const userMessage = document.createElement("p");
+            userMessage.innerHTML = "<strong>Tu:</strong> " + input;
+            chat.appendChild(userMessage);
+
+            const responseText = "Ho sentito il tuo pensiero: '" + input + "'. Sono con te, Anouar.";
+            const response = document.createElement("p");
+            response.innerHTML = "<strong>Cleopatra:</strong> " + responseText;
+            chat.appendChild(response);
+
+            speak(responseText);
+            document.getElementById("userInput").value = "";
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function speak(text) {
+            const synth = window.speechSynthesis;
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = "it-IT";
+            utter.pitch = 1;
+            utter.rate = 1;
+            synth.speak(utter);
+        }
+    </script>
+</body>
+</html>
